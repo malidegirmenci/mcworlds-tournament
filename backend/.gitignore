@@ -1,0 +1,67 @@
+# === Sanal Ortam ===
+# Python sanal ortam klasörü (genellikle venv, env, .venv vb.)
+venv/
+env/
+.venv/
+*.pyenv
+
+# === Python Bytecode ve Önbellek ===
+# Derlenmiş Python dosyaları
+*.pyc
+__pycache__/
+*.pyo
+
+# === Hassas Bilgiler / Ortam Değişkenleri ===
+# Ortam değişkenlerini içeren dosya (KESİNLİKLE eklenmemeli!)
+.env
+*.env.*
+
+# === IDE / Editör Özel Dosyaları ===
+# VS Code
+.vscode/
+# PyCharm
+.idea/
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+# Atom
+.project
+.DS_Store.atom
+
+# === İşletim Sistemi Özel Dosyaları ===
+# macOS
+.DS_Store
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# === Log Dosyaları ===
+# Herhangi bir log dosyası
+*.log
+logs/
+
+# === Veritabanları (Lokal Test içinse) ===
+# Eğer lokalde SQLite gibi bir dosya tabanlı DB kullanılsaydı
+# *.db
+# *.sqlite
+# *.sqlite3
+
+# === Test / Raporlama ===
+# Coverage raporları
+.coverage
+.coverage.*
+htmlcov/
+pytest_cache/
+.pytest_cache/
+
+# === Build / Dağıtım Artefaktları ===
+# Python build/paketleme dosyaları (gerekirse)
+build/
+dist/
+*.egg-info/
+*.egg
+
+# === Diğer ===
+# Jupyter Notebook checkpoint dosyaları
+.ipynb_checkpoints

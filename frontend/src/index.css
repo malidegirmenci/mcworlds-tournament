@@ -1,0 +1,26 @@
+@font-face{
+    font-family:Minecraftia;
+    src: url("../src/assets/fonts/Minecraftia-Regular.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@import "tailwindcss";
+
+@theme{
+    --font-minecraft:Minecraftia, "sans-serif"
+}
+
+body {
+    background-image: url('/mcworld-bg.jpg'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
+    background-color: transparent;
+}
+
+h1, h2, h3, h4, h5, h6, p, span {
+    font-family: 'Minecraftia', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
