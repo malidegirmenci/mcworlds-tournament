@@ -1,25 +1,28 @@
 // src/services/api.ts
 import axios from 'axios';
 
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1';
+
+
+console.log("API Base URL:", apiBaseUrl); 
+
 const apiClient = axios.create({
-    baseURL: 'http://localhost:8000/api/v1',
+    baseURL: apiBaseUrl, 
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
+// Request Interceptor (Aynı kalır)
 apiClient.interceptors.request.use(
     (config) => {
-        // localStorage'dan token'ı oku
-        const token = localStorage.getItem('authToken'); 
+        const token = localStorage.getItem('authToken');
         if (token) {
-            // Eğer token varsa, Authorization başlığını ayarla
             config.headers.Authorization = `Bearer ${token}`;
         }
-        return config; // Güncellenmiş config ile devam et
+        return config;
     },
     (error) => {
-        // İstek hatası olursa işle
         return Promise.reject(error);
     }
 );
