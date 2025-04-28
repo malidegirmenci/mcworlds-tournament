@@ -8,4 +8,4 @@ class Token(BaseModel):
     token_type: str
 
 class TokenData(BaseModel):
-    student_number: Optional[str] = None 
+    sub: Optional[str] = None 

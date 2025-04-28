@@ -1,16 +1,16 @@
 # backend/app/schemas/student.py
 
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from datetime import datetime
 from typing import List, Optional
 
 
 # Temel Student alanları
 class StudentBase(BaseModel):
-    student_number: str
+    email: EmailStr
 
 class StudentCreate(StudentBase):
-    pass
+    password: str
 
 class Student(StudentBase):
     id: int

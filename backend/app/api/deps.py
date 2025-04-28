@@ -3,12 +3,12 @@
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
-from pydantic import ValidationError # Pydantic model doğrulama hatası için
+from pydantic import ValidationError 
 from sqlalchemy.orm import Session
 
 from app import crud, models, schemas
 from app.core.config import settings
-from app.db.database import SessionLocal, get_db # get_db'yi import ediyoruz
+from app.db.database import SessionLocal, get_db 
 
 # OAuth2 şeması. tokenUrl, token'ın alınacağı endpoint'i göstermeli.
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{settings.API_V1_STR}/auth/login")
@@ -23,36 +23,24 @@ async def get_current_student(
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
-        # Token'ı decode etmeye çalış
         payload = jwt.decode(
             token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM]
         )
-        # Token payload'ından 'sub' (subject) alanını al (öğrenci numarasını oraya koymuştuk)
-        student_number: str = payload.get("sub")
-        if student_number is None:
-            raise credentials_exception # 'sub' alanı yoksa hata ver
-        # Token verisini Pydantic şeması ile doğrula (opsiyonel ama iyi pratik)
-        token_data = schemas.TokenData(student_number=student_number)
+        user_id_str: str | None = payload.get("sub")
+        if user_id_str is None:
+            raise credentials_exception
+        token_data = schemas.TokenData(sub=user_id_str)
 
-    except JWTError: # Token decode edilemezse (geçersiz format, imza hatası vb.)
-        raise credentials_exception
-    except ValidationError: # Pydantic şeması doğrulanamazsa
+    except (JWTError, ValidationError):
         raise credentials_exception
 
-    # Veritabanından öğrenciyi bul
-    student = crud.crud_student.get_student_by_student_number(db, student_number=token_data.student_number)
+    try:
+        user_id = int(token_data.sub)
+    except ValueError:
+        raise credentials_exception
+
+    # ID ile öğrenciyi bul
+    student = crud.crud_student.get_student(db, student_id=user_id) # crud.get_student yerine
     if student is None:
-        raise credentials_exception # Token geçerli ama veritabanında öyle bir öğrenci yoksa
-
-    # Öğrenci bulunduysa döndür
+        raise credentials_exception
     return student
-
-# İleride admin kullanıcısı gibi farklı roller olursa benzer bir dependency eklenebilir
-# async def get_current_active_superuser(
-#     current_user: models.User = Depends(get_current_user),
-# ) -> models.User:
-#     if not crud.user.is_superuser(current_user):
-#         raise HTTPException(
-#             status_code=400, detail="The user doesn't have enough privileges"
-#         )
-#     return current_user
