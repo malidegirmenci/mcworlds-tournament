@@ -67,4 +67,5 @@ dist/
 .ipynb_checkpoints
 
 # === Excel ===
-emailsandpasswords.xlsx
+students_list.xlsx
+participants_list.xlsx
