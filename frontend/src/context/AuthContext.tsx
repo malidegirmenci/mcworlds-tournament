@@ -18,7 +18,7 @@ interface AuthToken {
 
 interface User {
     id: number;
-    student_number: string;
+    full_name: string;
 }
 
 interface AuthContextType {

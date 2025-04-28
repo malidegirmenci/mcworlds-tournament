@@ -40,7 +40,7 @@ function App() {
         <div className="relative min-h-screen bg-[url(/mcworld-bg.jpg)] bg-center bg-cover bg-no-repeat bg-opacity-60 py-6">
           {/* Sağ Üst Butonlar (Scoreboard ve Logout) */}
           <div className="absolute top-4 right-4 z-10 flex space-x-2">
-            {user && <span className="text-sm text-gray-100 self-center mr-2 font-minecraft">Hoş geldin, {user.student_number}!</span>}
+            {user && <span className="text-sm text-gray-100 self-center mr-2 font-minecraft">Hoş geldin, {user.full_name}!</span>}
             {/* Scoreboard Butonu */}
             <button
               onClick={openScoreboard}
