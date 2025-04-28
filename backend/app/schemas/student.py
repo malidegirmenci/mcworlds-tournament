@@ -8,6 +8,7 @@ from typing import List, Optional
 # Temel Student alanları
 class StudentBase(BaseModel):
     email: EmailStr
+    full_name: Optional[str] = None
 
 class StudentCreate(StudentBase):
     password: str

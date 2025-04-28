@@ -21,7 +21,8 @@ def create_student(db: Session, student: schemas.StudentCreate):
     hashed_password = get_password_hash(student.password) # Şifreyi hash'le
     db_student = models.Student(
         email=student.email,
-        hashed_password=hashed_password # Hash'lenmiş şifreyi kaydet
+        hashed_password=hashed_password, # Hash'lenmiş şifreyi kaydet
+        full_name=student.full_name
     )
     db.add(db_student)
     db.commit()
