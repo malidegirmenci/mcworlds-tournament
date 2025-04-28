@@ -9,11 +9,11 @@ import React, {
     useCallback,
     ReactNode,
 } from 'react';
-import apiClient from '../services/api'; 
+import apiClient from '../services/api';
 
 interface AuthToken {
     access_token: string;
-    token_type: string; 
+    token_type: string;
 }
 
 interface User {
@@ -21,18 +21,15 @@ interface User {
     student_number: string;
 }
 
-
-// Context'in sağlayacağı değerlerin tipi
 interface AuthContextType {
     token: string | null;
-    user: User | null; // Giriş yapan kullanıcı bilgisi
-    isAuthenticated: boolean; // Giriş yapıldı mı?
-    isLoading: boolean; // Auth durumu kontrol ediliyor mu (ilk yükleme)?
-    login: (studentNumber: string) => Promise<boolean>; // Login fonksiyonu (başarı durumunu dönsün)
-    logout: () => void; // Logout fonksiyonu
+    user: User | null;
+    isAuthenticated: boolean;
+    isLoading: boolean;
+    login: (email: string, password: string) => Promise<boolean>;
+    logout: () => void;
 }
 
-// Context'i oluşturma (başlangıç değeri undefined)
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Provider Bileşeni
@@ -42,8 +39,8 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [token, setToken] = useState<string | null>(null);
-    const [user, setUser] = useState<User | null>(null); 
-    const [isLoading, setIsLoading] = useState<boolean>(true); 
+    const [user, setUser] = useState<User | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     // Token'ı localStorage'dan alma/ayarlama fonksiyonları (helper)
     const setTokenInStorage = (newToken: string | null) => {
@@ -66,7 +63,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             return response.data;
         } catch (error: any) {
             console.error("Kullanıcı bilgisi alınamadı (fetchUser):", error);
-            // Token geçersizse temizle
             if (error.response && error.response.status === 401) {
                 setTokenInStorage(null);
                 setUser(null);
@@ -75,8 +71,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
     }, []);
 
-
-    // İlk Yükleme Effect'i: Sayfa yüklendiğinde token'ı kontrol et
     useEffect(() => {
         console.log("AuthContext: Initial load effect running...");
         const initialToken = localStorage.getItem('authToken');
@@ -91,21 +85,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             console.log("No token found in storage.");
             setIsLoading(false); // Token yoksa yüklemeyi bitir
         }
-    }, [fetchUser]); 
+    }, [fetchUser]);
 
     // Login Fonksiyonu
-    const login = useCallback(async (studentNumber: string): Promise<boolean> => {
-        setIsLoading(true); // Login işlemi başladığında yükleniyor
-        console.log(`Attempting login for student: ${studentNumber}`);
+    const login = useCallback(async (email: string, password: string): Promise<boolean> => {
+        setIsLoading(true);
+        console.log(`Attempting login for email: ${email}`);
         try {
-            // Backend'e login isteği gönder (x-www-form-urlencoded olarak)
             const formData = new URLSearchParams();
-            formData.append('student_number', studentNumber);
+            formData.append('username', email);
+            formData.append('password', password);
 
             const response = await apiClient.post<AuthToken>(
                 '/auth/login',
-                formData, // Veriyi form data olarak gönder
-                { // Axios config
+                formData,
+                {
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
@@ -114,19 +108,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
             const { access_token } = response.data;
             console.log("Login successful, received token:", access_token);
-            setTokenInStorage(access_token); // Token'ı state'e ve storage'a kaydet
-            await fetchUser(access_token); // Kullanıcı bilgilerini çek ve state'e kaydet
-            return true; // Başarılı login
+            setTokenInStorage(access_token);
+            await fetchUser(access_token);
+            return true;
 
         } catch (error: any) {
             console.error("Login hatası:", error.response?.data || error.message);
-            setTokenInStorage(null); // Hata durumunda token'ı temizle
+            setTokenInStorage(null);
             setUser(null);
-            return false; // Başarısız login
+            return false;
         } finally {
-            setIsLoading(false); // Login işlemi bittiğinde yükleniyor durumunu kapat
+            setIsLoading(false);
         }
-    }, [fetchUser]); 
+    }, [fetchUser]);
 
     // Logout Fonksiyonu
     const logout = useCallback(() => {
