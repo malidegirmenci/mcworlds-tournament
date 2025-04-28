@@ -154,9 +154,9 @@ const WorldCarousel: React.FC = () => {
 
     return (
         <div className="p-4 max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold mb-8 text-center text-gray-100">Minecraft Worlds Tournament</h2>
+            <h2 className="text-3xl font-bold mb-5 text-center text-gray-100">Minecraft Worlds Tournament</h2>
             {participants.length === 0 ? (
-                <p className="text-center text-gray-500">Gösterilecek dünya bulunamadı.</p>
+                <p className="text-center text-gray-100">Gösterilecek dünya bulunamadı.</p>
             ) : (
                 <div className="relative navigation-wrapper"> {/* KeenSlider ve oklar için sarmalayıcı */}
                     <div ref={sliderRef} className="keen-slider rounded-lg overflow-hidden shadow-xl"> 
@@ -165,7 +165,7 @@ const WorldCarousel: React.FC = () => {
                             const isCurrentVoteProcessing = isVoting === participant.id;
                             return (
                                 <div className="keen-slider__slide" key={participant.id}>
-                                    <div className="bg-gradient-to-br from-gray-700 to-gray-900 p-5 rounded-lg h-full flex flex-col items-center">
+                                    <div className="bg-gradient-to-br from-gray-700 to-gray-900 p-3 rounded-lg h-full flex flex-col items-center">
                                         <video
                                             src={participant.video_url}
                                             controls
@@ -178,7 +178,7 @@ const WorldCarousel: React.FC = () => {
                                                 <button
                                                     onClick={() => handleLikeClick(participant.id)}
                                                     disabled={isCurrentVoteProcessing}
-                                                    className={`p-1.5 rounded-full transition-transform duration-200 ease-in-out ${isCurrentVoteProcessing ? 'opacity-50 cursor-wait' : 'hover:scale-110 active:scale-95' // Küçük animasyonlar
+                                                    className={`p-1.5 rounded-full transition-transform duration-200 ease-in-out ${isCurrentVoteProcessing ? 'opacity-50 cursor-wait' : 'hover:scale-110 active:scale-95'
                                                         }`}
                                                     aria-label={isLiked ? "Oyu Geri Al" : "Oy Ver"}
                                                 >
