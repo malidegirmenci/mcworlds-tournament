@@ -40,16 +40,14 @@ h1, h2, h3, h4, h5, h6, p, span {
   .minecraft-loader-block {
     width: 50px; /* Blok boyutu */
     height: 50px;
-    background-color: #8B4513; /* Kahverengi (Dirt Block gibi) */
-    border: 3px solid #5C2E0A; /* Daha koyu çerçeve */
-    margin: 20px auto; /* Ortalamak için */
+    background-color: #8B4513; 
+    border: 3px solid #5C2E0A; 
+    margin: 20px auto; 
     animation: minecraft-pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    /* Pikselli görünüm için (opsiyonel, tarayıcı desteği değişebilir) */
     image-rendering: pixelated;
     image-rendering: -moz-crisp-edges;
     image-rendering: crisp-edges;
-    /* İçine küçük pikseller ekleyebiliriz (daha gelişmiş) */
-    position: relative; /* İç pikseller için */
+    position: relative; 
   }
   
   /* Opsiyonel: İç Piksel Efekti */
@@ -59,7 +57,7 @@ h1, h2, h3, h4, h5, h6, p, span {
     position: absolute;
     width: 10px;
     height: 10px;
-    background-color: #A0522D; /* Biraz daha açık kahve */
+    background-color: #A0522D;
     opacity: 0.7;
   }
   .minecraft-loader-block::before {
