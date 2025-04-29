@@ -200,7 +200,6 @@ const WorldCarousel: React.FC = () => {
                                             src={participant.video_url}
                                             controls
                                             className="w-full aspect-video rounded-md shadow"
-                                            autoPlay
                                         >
                                             Tarayıcınız video etiketini desteklemiyor.
                                         </video>
