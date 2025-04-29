@@ -24,3 +24,49 @@ body {
 h1, h2, h3, h4, h5, h6, p, span {
     font-family: 'Minecraftia', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
+
+/* --- Minecraft Yükleme Animasyonu --- */
+@keyframes minecraft-pulse {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.6;
+      transform: scale(1.05);
+    }
+  }
+  
+  .minecraft-loader-block {
+    width: 50px; /* Blok boyutu */
+    height: 50px;
+    background-color: #8B4513; /* Kahverengi (Dirt Block gibi) */
+    border: 3px solid #5C2E0A; /* Daha koyu çerçeve */
+    margin: 20px auto; /* Ortalamak için */
+    animation: minecraft-pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    /* Pikselli görünüm için (opsiyonel, tarayıcı desteği değişebilir) */
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    /* İçine küçük pikseller ekleyebiliriz (daha gelişmiş) */
+    position: relative; /* İç pikseller için */
+  }
+  
+  /* Opsiyonel: İç Piksel Efekti */
+  .minecraft-loader-block::before,
+  .minecraft-loader-block::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #A0522D; /* Biraz daha açık kahve */
+    opacity: 0.7;
+  }
+  .minecraft-loader-block::before {
+    top: 10px;
+    left: 10px;
+  }
+  .minecraft-loader-block::after {
+    bottom: 10px;
+    right: 10px;
+  }

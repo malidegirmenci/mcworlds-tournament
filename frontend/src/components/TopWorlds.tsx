@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import apiClient from '../services/api';
 import type { Participant } from '../types';
+import LoadingIndicator from './LoadingIndicator';
 
 const TopWorlds: React.FC = () => {
     const [topParticipants, setTopParticipants] = useState<Participant[]>([]);
@@ -31,7 +32,7 @@ const TopWorlds: React.FC = () => {
     // --- Render Logic ---
 
     if (isLoading) {
-        return <div className="text-center p-4 text-gray-100">Skor tablosu yükleniyor...</div>;
+        return <LoadingIndicator message="Skor Tablosu Yükleniyor..." />;
     }
 
     if (error) {

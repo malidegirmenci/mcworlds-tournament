@@ -5,6 +5,7 @@ import apiClient from '../services/api';
 import { useKeenSlider } from 'keen-slider/react';
 
 import type { Participant } from '../types';
+import LoadingIndicator from './LoadingIndicator';
 
 // API'den dönen oy listesinin tipi (/votes/my-votes)
 interface MyVoteResponse {
@@ -174,7 +175,7 @@ const WorldCarousel: React.FC = () => {
     // --- Render Logic ---
 
     if (isLoading || isVotesLoading) {
-        return <div className="text-center p-10 text-lg font-semibold">Veriler Yükleniyor...</div>;
+        return <LoadingIndicator message="Dünyalar ve Oylar Yükleniyor..." />;
     }
 
     if (error) {

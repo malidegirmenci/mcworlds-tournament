@@ -6,6 +6,7 @@ import WorldCarousel from './components/WorldCarousel';
 import TopWorlds from './components/TopWorlds';
 import Modal from './components/Modal';
 import Login from './components/Login';
+import LoadingIndicator from './components/LoadingIndicator';
 
 function App() {
   // Auth context'ten gerekli değerleri al
@@ -22,9 +23,7 @@ function App() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-[url(/mcworld-bg.jpg)] bg-center bg-cover bg-no-repeat bg-opacity-60">
-        <div className="text-xl font-semibold font-minecraft text-gray-600">
-          Yükleniyor...
-        </div>
+        return <LoadingIndicator message="Uygulama Başlatılıyor..." />;
       </div>
     );
   }
