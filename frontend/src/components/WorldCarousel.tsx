@@ -1,10 +1,10 @@
 // src/components/WorldCarousel.tsx
 
-import React, { useState, useEffect } from 'react';
-import apiClient from '../services/api'; 
+import React, { useState, useEffect, useRef } from 'react';
+import apiClient from '../services/api';
 import { useKeenSlider } from 'keen-slider/react';
 
-import type { Participant } from '../types'; 
+import type { Participant } from '../types';
 
 // API'den dönen oy listesinin tipi (/votes/my-votes)
 interface MyVoteResponse {
@@ -15,26 +15,55 @@ interface MyVoteResponse {
 const WorldCarousel: React.FC = () => {
     // State tanımlamaları
     const [participants, setParticipants] = useState<Participant[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(true);       
-    const [error, setError] = useState<string | null>(null);        
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
     // KeenSlider state'leri
     const [currentSlide, setCurrentSlide] = useState(0);
-    const [loaded, setLoaded] = useState(false); 
+    const [loaded, setLoaded] = useState(false);
 
     // Kullanıcı oyları ve oy verme durumu state'leri
-    const [myVotes, setMyVotes] = useState<Set<number>>(new Set()); 
-    const [isVotesLoading, setIsVotesLoading] = useState<boolean>(false); 
-    const [isVoting, setIsVoting] = useState<number | null>(null); 
+    const [myVotes, setMyVotes] = useState<Set<number>>(new Set());
+    const [isVotesLoading, setIsVotesLoading] = useState<boolean>(false);
+    const [isVoting, setIsVoting] = useState<number | null>(null);
+
+    const previousSlideIndexRef = useRef<number>(0);
 
     // KeenSlider hook'u
     const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
         initial: 0,
+        // Slayt değiştiğinde tetiklenecek fonksiyon
         slideChanged(slider) {
+            console.log('Slide changed. New index:', slider.track.details.rel);
+            // --- VİDEO DURAKLATMA MANTIĞI ---
+            try {
+                // Önceki slaytın DOM elementini al
+                const previousSlideElement = slider.slides[previousSlideIndexRef.current];
+                if (previousSlideElement) {
+                    // Önceki slayt içindeki video elementini bul
+                    const videoElement = previousSlideElement.querySelector('video');
+                    if (videoElement && !videoElement.paused) {
+                        console.log(`Pausing video in previous slide index: ${previousSlideIndexRef.current}`);
+                        videoElement.pause();
+                        // İsteğe bağlı: Videoyu başa sarmak isterseniz
+                        // videoElement.currentTime = 0;
+                    }
+                }
+            } catch (e) {
+                console.error("Error pausing previous video:", e);
+            }
+            // --- BİTİŞ: VİDEO DURAKLATMA MANTIĞI ---
+
+            // Mevcut slayt state'ini güncelle
             setCurrentSlide(slider.track.details.rel);
+            // Yeni indeksi bir sonraki değişiklik için ref'e kaydet
+            previousSlideIndexRef.current = slider.track.details.rel;
         },
-        created() {
+        // Slider ilk oluşturulduğunda çalışır
+        created(slider) {
             setLoaded(true);
+            // Başlangıç indeksini ref'e kaydet
+            previousSlideIndexRef.current = slider.track.details.rel;
         },
         loop: false,
         slides: {
@@ -91,7 +120,7 @@ const WorldCarousel: React.FC = () => {
         };
 
         fetchMyVotes();
-    }, []); 
+    }, []);
 
     // Fonksiyon: Beğenme/Geri Alma İşlemi
     const handleLikeClick = async (participantId: number) => {
@@ -159,7 +188,7 @@ const WorldCarousel: React.FC = () => {
                 <p className="text-center text-gray-100">Gösterilecek dünya bulunamadı.</p>
             ) : (
                 <div className="relative navigation-wrapper"> {/* KeenSlider ve oklar için sarmalayıcı */}
-                    <div ref={sliderRef} className="keen-slider rounded-lg overflow-hidden shadow-xl"> 
+                    <div ref={sliderRef} className="keen-slider rounded-lg overflow-hidden shadow-xl">
                         {participants.map((participant) => {
                             const isLiked = myVotes.has(participant.id);
                             const isCurrentVoteProcessing = isVoting === participant.id;
@@ -169,7 +198,7 @@ const WorldCarousel: React.FC = () => {
                                         <video
                                             src={participant.video_url}
                                             controls
-                                            className="w-full aspect-video mb-4 rounded-md shadow" 
+                                            className="w-full aspect-video mb-4 rounded-md shadow"
                                         >
                                             Tarayıcınız video etiketini desteklemiyor.
                                         </video>
@@ -186,9 +215,9 @@ const WorldCarousel: React.FC = () => {
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         className={`h-7 w-7 transition-colors ${isLiked ? 'text-red-500' : 'text-gray-100 hover:text-red-400'}`}
                                                         viewBox="0 0 24 24"
-                                                        fill={isLiked ? 'currentColor' : 'none'} 
+                                                        fill={isLiked ? 'currentColor' : 'none'}
                                                         stroke="currentColor"
-                                                        strokeWidth={1.5} 
+                                                        strokeWidth={1.5}
                                                     >
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                                                     </svg>
@@ -229,7 +258,7 @@ function Arrow(props: {
     left?: boolean
     onClick: (e: any) => void
 }) {
-    const disabled = props.disabled ? " opacity-50 cursor-not-allowed" : " hover:bg-gray-300"; 
+    const disabled = props.disabled ? " opacity-50 cursor-not-allowed" : " hover:bg-gray-300";
     return (
         <button
             onClick={props.onClick}
