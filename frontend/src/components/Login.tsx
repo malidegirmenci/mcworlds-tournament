@@ -27,7 +27,7 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen p-4 bg-cover bg-center" style={{ backgroundImage: "url('/arkaplan.jpg')" }}>
+        <div className="flex items-center justify-center min-h-screen p-4 bg-cover bg-center">
 
             {/* Login Kutusu */}
             <div className="p-6 sm:p-8 bg-gray-800 bg-opacity-90 rounded-lg shadow-xl w-full max-w-md backdrop-blur-sm border border-gray-700">
