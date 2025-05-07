@@ -186,12 +186,12 @@ const WorldCarousel: React.FC = () => {
                                         >
                                             Tarayıcınız video etiketini desteklemiyor.
                                         </video>
-                                        <div className="flex flex-wrap justify-between items-center mt-auto w-full gap-2">
-                                            <div className="flex items-center space-x-1 sm:space-x-2">
+                                        <div className="flex flex-wrap items-center mt-auto w-full gap-2">
+                                            <div className="flex items-center mx-auto">
                                                 <button
                                                     onClick={() => handleLikeClick(participant.id)}
                                                     disabled={isCurrentVoteProcessing}
-                                                    className={`p-1.5 rounded-full transition-transform duration-200 ease-in-out ${isCurrentVoteProcessing ? 'opacity-50 cursor-wait' : 'hover:scale-110 active:scale-95'
+                                                    className={`p-1 rounded-full transition-transform duration-200 ease-in-out ${isCurrentVoteProcessing ? 'opacity-50 cursor-wait' : 'hover:scale-110 active:scale-95'
                                                         }`}
                                                     aria-label={isLiked ? "Oyu Geri Al" : "Oy Ver"}
                                                 >
@@ -206,7 +206,7 @@ const WorldCarousel: React.FC = () => {
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                                                     </svg>
                                                 </button>
-                                                <span className="text-base sm:text-lg font-medium text-gray-100 pt-1 sm:pt-0 w-6 text-right font-minecraft">{participant.like_count}</span>
+                                                <span className="sm:text-lg text-center text-gray-100 font-minecraft">{participant.like_count}</span>
                                             </div>
                                         </div>
                                     </div>
