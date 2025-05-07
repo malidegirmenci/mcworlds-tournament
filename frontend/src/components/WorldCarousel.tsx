@@ -167,7 +167,7 @@ const WorldCarousel: React.FC = () => {
     return (
         // Ana konteyner: 
         <div className="px-2 sm:px-4 py-4 max-w-4xl mx-auto"> 
-            <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-5 text-center text-gray-100 font-minecraft">Minecraft Worlds Tournament</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold my-3 sm:my-5  text-center text-gray-100 font-minecraft">Minecraft Worlds Tournament</h2>
             {participants.length === 0 ? (
                 <p className="text-center text-gray-100 font-minecraft">Gösterilecek dünya bulunamadı.</p>
             ) : (
@@ -182,7 +182,7 @@ const WorldCarousel: React.FC = () => {
                                         <video
                                             src={participant.video_url}
                                             controls
-                                            className="w-full aspect-video mb-3 sm:mb-4 rounded-md shadow"
+                                            className="w-full aspect-auto mb-3 sm:mb-4 rounded-md shadow"
                                         >
                                             Tarayıcınız video etiketini desteklemiyor.
                                         </video>
