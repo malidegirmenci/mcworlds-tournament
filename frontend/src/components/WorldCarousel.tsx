@@ -187,10 +187,6 @@ const WorldCarousel: React.FC = () => {
                                             Tarayıcınız video etiketini desteklemiyor.
                                         </video>
                                         <div className="flex flex-wrap justify-between items-center mt-auto w-full gap-2">
-                                            
-                                            <span className="font-bold text-lg sm:text-xl text-gray-100 font-minecraft truncate">
-                                                {participant.serial_number}
-                                            </span>
                                             <div className="flex items-center space-x-1 sm:space-x-2">
                                                 <button
                                                     onClick={() => handleLikeClick(participant.id)}
