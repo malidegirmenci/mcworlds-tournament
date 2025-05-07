@@ -7,10 +7,11 @@ import TopWorlds from './components/TopWorlds';
 import Modal from './components/Modal';
 import Login from './components/Login';
 import LoadingIndicator from './components/LoadingIndicator';
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function App() {
   // Auth context'ten gerekli değerleri al
-  const { isAuthenticated, isLoading, logout, user } = useAuth(); 
+  const { isAuthenticated, isLoading, logout, user } = useAuth();
 
   // Scoreboard modal state'i
   const [isScoreboardOpen, setIsScoreboardOpen] = useState<boolean>(false);
@@ -22,15 +23,25 @@ function App() {
   // 1. İlk Yükleme Kontrolü: Auth durumu kontrol edilirken bekleme ekranı göster
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-[url(/mcworld-bg.jpg)] bg-center bg-cover bg-no-repeat bg-opacity-60">
-        return <LoadingIndicator message="Uygulama Başlatılıyor..." />;
-      </div>
+      <LoadingIndicator message="Uygulama Başlatılıyor..." />
     );
   }
 
   // 2. Giriş Durumu Kontrolü: Yükleme bittikten sonra
   return (
     <>
+      <ToastContainer
+        position="top-right" // Bildirimlerin konumu
+        autoClose={3000} // Otomatik kapanma süresi (ms)
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       {!isAuthenticated ? (
         // --- Kullanıcı Giriş Yapmamışsa ---
         <Login />
