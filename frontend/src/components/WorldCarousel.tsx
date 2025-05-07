@@ -166,8 +166,8 @@ const WorldCarousel: React.FC = () => {
 
     return (
         // Ana konteyner: 
-        <div className="px-2 sm:px-4 py-4 max-w-4xl mx-auto"> 
-            <h2 className="text-2xl sm:text-3xl font-bold my-3 sm:my-5  text-center text-gray-100 font-minecraft">Minecraft Worlds Tournament</h2>
+        <div className="px-2 md:px-4 py-4 max-w-4xl mx-auto"> 
+            <h2 className="text-2xl md:text-3xl font-bold my-3 md:my-5  text-center text-gray-100 font-minecraft">Minecraft Worlds Tournament</h2>
             {participants.length === 0 ? (
                 <p className="text-center text-gray-100 font-minecraft">Gösterilecek dünya bulunamadı.</p>
             ) : (
@@ -178,11 +178,11 @@ const WorldCarousel: React.FC = () => {
                             const isCurrentVoteProcessing = isVoting === participant.id;
                             return (
                                 <div className="keen-slider__slide" key={participant.id}>
-                                    <div className="bg-gradient-to-br from-gray-700 to-gray-900 p-3 sm:p-4 rounded-lg h-full flex flex-col items-center">
+                                    <div className="bg-gradient-to-br from-gray-700 to-gray-900 p-3 md:p-4 rounded-lg h-full flex flex-col items-center">
                                         <video
                                             src={participant.video_url}
                                             controls
-                                            className="w-full aspect-auto sm:aspect-3/2 mb-3 sm:mb-4 rounded-md shadow"
+                                            className="w-full aspect-auto mb-3 md:mb-4 rounded-md shadow"
                                         >
                                             Tarayıcınız video etiketini desteklemiyor.
                                         </video>
@@ -197,7 +197,7 @@ const WorldCarousel: React.FC = () => {
                                                 >
                                                     <svg
                                                         xmlns="http://www.w3.org/2000/svg"
-                                                        className={`h-6 w-6 sm:h-7 sm:w-7 transition-colors ${isLiked ? 'text-red-500' : 'text-gray-100 hover:text-red-400'}`}
+                                                        className={`h-6 w-6 md:h-7 md:w-7 transition-colors ${isLiked ? 'text-red-500' : 'text-gray-100 hover:text-red-400'}`}
                                                         viewBox="0 0 24 24"
                                                         fill={isLiked ? 'currentColor' : 'none'}
                                                         stroke="currentColor"
@@ -206,7 +206,7 @@ const WorldCarousel: React.FC = () => {
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                                                     </svg>
                                                 </button>
-                                                <span className="sm:text-lg text-center text-gray-100 font-minecraft">{participant.like_count}</span>
+                                                <span className="md:text-lg text-center text-gray-100 font-minecraft">{participant.like_count}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -248,18 +248,18 @@ function Arrow(props: {
         <button
             onClick={props.onClick}
             // Padding ve konum responsive yapıldı
-            className={`font-minecraft z-10 absolute top-1/2 transform -translate-y-1/2 p-2 sm:p-3 bg-gray-500 bg-opacity-70 hover:bg-opacity-90 rounded-full shadow-lg cursor-pointer transition-opacity ${props.left ? "left-1 sm:left-2" : "right-1 sm:right-2" // Küçük ekranda daha içeride
+            className={`font-minecraft z-10 absolute top-1/2 transform -translate-y-1/2 p-2 md:p-3 bg-gray-500 bg-opacity-70 hover:bg-opacity-90 rounded-full shadow-lg cursor-pointer transition-opacity ${props.left ? "left-1 md:left-2" : "right-1 md:right-2" // Küçük ekranda daha içeride
                 } ${disabled}`}
             disabled={props.disabled}
             aria-label={props.left ? "Önceki Slayt" : "Sonraki Slayt"}
         >
             {/* İkon rengi ve kalınlığı güncellendi */}
             {props.left ? (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 md:h-6 md:w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
             ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 md:h-6 md:w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
             )}
