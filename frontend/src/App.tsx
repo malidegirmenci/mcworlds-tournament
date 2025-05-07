@@ -32,7 +32,7 @@ function App() {
     <>
       <ToastContainer
         position="top-right" // Bildirimlerin konumu
-        autoClose={3000} // Otomatik kapanma süresi (ms)
+        autoClose={5000} // Otomatik kapanma süresi (ms)
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
