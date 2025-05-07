@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import apiClient from '../services/api';
-import { useKeenSlider, KeenSliderInstance } from 'keen-slider/react';
+import { useKeenSlider } from 'keen-slider/react';
 
 import type { Participant } from '../types';
 import LoadingIndicator from './LoadingIndicator';
